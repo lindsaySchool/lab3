@@ -1,3 +1,4 @@
+import { createClient } from 'pexels';
 export default class App{
     constructor(){
         console.log("Hello from App.js");
@@ -47,7 +48,7 @@ export default class App{
             title.after(p);
         } else if(temp > 20){
             adv.style.backgroundColor = "red";
-            adv.style.backgroundImage = "url('https://www.coca-cola.com/content/dam/onexp/be/nl/home-images/brands/coca-cola/BE_coca-cola-regular_750x750.jpg/width1338.jpg')";
+            adv.style.backgroundImage = this.getBackgroundImage("beach");
             p.innerHTML = "Go to the beach and drink some refreshing coca-cola!";
             title.after(p);
         }else{
@@ -56,5 +57,15 @@ export default class App{
             p.innerHTML = "Go outside and drink some coca-cola!";
             title.after(p);
         }
+    }
+    //API Pexels
+    getBackgroundImage(searchName){
+        const client = createClient('rqen22CsrFROrJ9V6jazPJizrS8sIVzNnCIoAhVfk6AIeAHv0TTAcb3q');
+        const query = searchName;
+        client.photos.search({ query, per_page: 1 }).then(photos => {
+            console.log(photos);
+            return photos;
+        });
+
     }
 }
