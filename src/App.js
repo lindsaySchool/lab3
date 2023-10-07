@@ -43,7 +43,7 @@ export default class App{
         let p = document.createElement("p");
         if(temp < 10){
             //Change the background and add a text
-            this.getBackgroundImage("coca cola sofa")
+            this.getBackgroundImage("coca cola and chips")
             .then(imageUrl => {
                 if (imageUrl) {
                     adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
@@ -55,7 +55,7 @@ export default class App{
             p.innerHTML = "Watch some tv with some snacks and your favorite coca-cola!";
             title.after(p);
         } else if(temp > 20){
-            this.getBackgroundImage("coca cola beach")
+            this.getBackgroundImage("coca cola ice cube")
             .then(imageUrl => {
                 if (imageUrl) {
                     adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
@@ -68,7 +68,7 @@ export default class App{
             title.after(p);
         }else{
             //Temperature lower than 20 and higher than 10
-            this.getBackgroundImage("coca cola outside")
+            this.getBackgroundImage("coca cola with friends")
             .then(imageUrl => {
                 if (imageUrl) {
                     adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
@@ -85,9 +85,10 @@ export default class App{
     async getBackgroundImage(searchName){
         const client = createClient('rqen22CsrFROrJ9V6jazPJizrS8sIVzNnCIoAhVfk6AIeAHv0TTAcb3q');
         const query = searchName;
+        const orientation = 'landscape';
 
         try {
-            const photos = await client.photos.search({ query, per_page: 1 });
+            const photos = await client.photos.search({ query, per_page: 1, orientation });
             if (photos.total_results > 0) {
                 const photo = photos.photos[0];
                 const imageUrl = photo.src.original;
