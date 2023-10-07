@@ -30,26 +30,31 @@ export default class App{
                 //Get the temperature from the API
                 let temp = data.current_weather.temperature;
                 document.querySelector("span").innerHTML = temp + "°C";
-                console.log(temp);
-                if(temp < 10){
-                    //Change the background of the div with id App and add after the h2 element a p element with the text: "It's cold outside, watch some tv with some snacks and your favorite coca-cola!"
-                    document.querySelector("#app").style.backgroundColor = "blue";
-                    let p = document.createElement("p");
-                    p.innerHTML = "It's cold outside, watch some tv with some snacks and your favorite coca-cola!";
-                    document.querySelector("h1").after(p);
-
-                } else if(temp > 20){
-                    document.querySelector("#app").style.backgroundColor = "red";
-                    let p = document.createElement("p");
-                    p.innerHTML = "It's hot outside, go to the beach and drink some refreshing coca-cola!";
-                    document.querySelector("h1").after(p);
-                }else{
-                    document.querySelector("#app").style.backgroundColor = "green";
-                    let p = document.createElement("p");
-                    p.innerHTML = "The sun is shining, go outside and drink some coca-cola!";
-                    document.querySelector("h1").after(p);
-                }
+                this.editAdvertisment(temp);
             })
             .catch(error => console.log(error));
+    }
+    //Edit the advertisment
+    editAdvertisment(temp){
+        //Get the advertisment
+        let adv = document.querySelector("#app");
+        let title = document.querySelector("h1");
+        let p = document.createElement("p");
+        if(temp < 10){
+            //Change the background and add a text
+            adv.style.backgroundColor = "blue";
+            p.innerHTML = "Watch some tv with some snacks and your favorite coca-cola!";
+            title.after(p);
+        } else if(temp > 20){
+            adv.style.backgroundColor = "red";
+            adv.style.backgroundImage = "url('https://www.coca-cola.com/content/dam/onexp/be/nl/home-images/brands/coca-cola/BE_coca-cola-regular_750x750.jpg/width1338.jpg')";
+            p.innerHTML = "Go to the beach and drink some refreshing coca-cola!";
+            title.after(p);
+        }else{
+            //Temperature lower than 20 and higher than 10
+            adv.style.backgroundColor = "green";
+            p.innerHTML = "Go outside and drink some coca-cola!";
+            title.after(p);
+        }
     }
 }
