@@ -1,5 +1,7 @@
 #app {
   background-color: #000;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #FFF;
   height: 280px;
   width: 336px;

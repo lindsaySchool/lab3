@@ -43,29 +43,65 @@ export default class App{
         let p = document.createElement("p");
         if(temp < 10){
             //Change the background and add a text
-            adv.style.backgroundColor = "blue";
+            this.getBackgroundImage("coca cola sofa")
+            .then(imageUrl => {
+                if (imageUrl) {
+                    adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
+                }
+            })
+            .catch(error => {
+                console.error('Fout bij het ophalen van de achtergrondafbeelding:', error);
+            });
             p.innerHTML = "Watch some tv with some snacks and your favorite coca-cola!";
             title.after(p);
         } else if(temp > 20){
-            adv.style.backgroundColor = "red";
-            adv.style.backgroundImage = this.getBackgroundImage("beach");
+            this.getBackgroundImage("coca cola beach")
+            .then(imageUrl => {
+                if (imageUrl) {
+                    adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
+                }
+            })
+            .catch(error => {
+                console.error('Fout bij het ophalen van de achtergrondafbeelding:', error);
+            });
             p.innerHTML = "Go to the beach and drink some refreshing coca-cola!";
             title.after(p);
         }else{
             //Temperature lower than 20 and higher than 10
-            adv.style.backgroundColor = "green";
+            this.getBackgroundImage("coca cola outside")
+            .then(imageUrl => {
+                if (imageUrl) {
+                    adv.style.backgroundImage = `url(${imageUrl})`; // Stel de achtergrond in met de ontvangen URL
+                }
+            })
+            .catch(error => {
+                console.error('Fout bij het ophalen van de achtergrondafbeelding:', error);
+            });
             p.innerHTML = "Go outside and drink some coca-cola!";
             title.after(p);
         }
     }
     //API Pexels
-    getBackgroundImage(searchName){
+    async getBackgroundImage(searchName){
         const client = createClient('rqen22CsrFROrJ9V6jazPJizrS8sIVzNnCIoAhVfk6AIeAHv0TTAcb3q');
         const query = searchName;
-        client.photos.search({ query, per_page: 1 }).then(photos => {
-            console.log(photos);
-            return photos;
-        });
+
+        try {
+            const photos = await client.photos.search({ query, per_page: 1 });
+            if (photos.total_results > 0) {
+                const photo = photos.photos[0];
+                const imageUrl = photo.src.original;
+                console.log(imageUrl);
+                // Return the imageUrl when a photo is found
+                return imageUrl;
+            } else {
+                console.log('Geen foto gevonden');
+                return null; // Return null when no photo is found
+            }
+        } catch (error) {
+            console.error('Fout bij het ophalen van foto:', error);
+            return null; // Return null in case of an error
+        }
 
     }
 }
