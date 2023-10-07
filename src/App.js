@@ -29,7 +29,7 @@ export default class App{
                 console.log(data)
                 //Get the temperature from the API
                 let temp = data.current_weather.temperature;
-                document.querySelector("h2").innerHTML = temp + "°C";
+                document.querySelector("span").innerHTML = temp + "°C";
             })
             .catch(error => console.log(error));
     }
